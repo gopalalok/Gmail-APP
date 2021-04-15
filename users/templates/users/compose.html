@@ -1,0 +1,40 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section ml-auto col-md-mr-5 col-sm-mr-2 mt-5 col-md-9 col-sm-12 p-5">
+      <div class="media ">
+        <img class="rounded-circle account-img" width="100px" height="70px" src="{{ user.profile.image.url }}">
+        <div class="media-body ml-5">
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+        </div>
+      </div>
+      <form action="{% url 'compose' %}" method="POST">
+        {% csrf_token %}
+        {% if error%}
+          <div class="alert alert-danger" role="alert">
+        {{error}}
+        </div>
+        {% endif %}
+        
+      <hr>
+      <legend class="col-form-label"><h5>New Message</h5></legend>
+        <div class="form-group">
+          <label for="">To</label>
+          <input type="text" name="toemail" value="{{values.toemail}}" id="" class="form-control" placeholder="" aria-describedby="helpId">
+        </div>
+
+        <div class="form-group">
+            <label for="">Subject</label>
+            <input type="text" required name="subject" value="{{values.subject}}" id="" class="form-control" placeholder="" aria-describedby="helpId">
+          </div>
+        
+        <div class="form-group">
+          <label for="">Message</label>
+          <textarea class="form-control" name="message" rows="3">{{values.message}}</textarea>
+        </div>
+        
+        <input type="submit" class="btn float-right btn-outline-info col-lg-2" value="Sent">
+    </form>
+    </div>
+{% endblock content %}

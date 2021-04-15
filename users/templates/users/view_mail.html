@@ -1,0 +1,34 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section ml-auto col-md-mr-5 col-sm-mr-2 mt-5 col-md-9 col-sm-12 p-5">
+      <div class="media ">
+        <img class="rounded-circle account-img" width="100px" height="70px" src="{{ user.profile.image.url }}">
+        <div class="media-body ml-5">
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+        </div>
+      </div>
+      
+        
+        
+      <hr>
+      <legend class="col-form-label"><h5>New Message</h5></legend>
+        <div class="form-group">
+          <label for="">From</label>
+          <input type="text" name="toemail" value="{{vw_mail.fromemail}}" disabled id="" class="form-control" placeholder="" aria-describedby="helpId">
+        </div>
+
+        <div class="form-group">
+            <label for="">Subject</label>
+            <input type="text" required name="subject" disabled value="{{vw_mail.subject}}" id="" class="form-control" placeholder="" aria-describedby="helpId">
+          </div>
+        
+        <div class="form-group">
+          <label for="">Message</label>
+          <textarea class="form-control" disabled rows="3">{{vw_mail.message}}</textarea>
+        </div>
+        
+        
+    </div>
+{% endblock content %}
