@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/sidebar.css' %}" />
+    
+
+    {% if title %}
+        <title>Gmail - {{ title }}</title>
+    {% else %}
+        <title>Gmail</title>
+    {% endif %}
+    <style>
+      .slideshow{
+        width: 100%;
+        height: 100%;
+        margin-top: 18px;
+      }
+      #slideimage{
+        width: 100%;
+        height: 100%;
+      }
+
+      
+    </style>
+    
+</head>
+<body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+        <div class="container">
+          
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            
+            <!-- Navbar Right Side -->
+            
+              {% if user.is_authenticated %}
+              <input type="checkbox" id="openSidebarMenu">
+              <label for="openSidebarMenu" class="sidebarIconToggle">
+                  <div class="spinner top"></div>
+                  <div class="spinner middle"></div>
+                  <div class="spinner bottom"></div>
+              </label>
+              <div id="sidebarMenu">
+                  <ul class="menu">
+                      <li><i class="fas fa-plus"></i></i><a href="{% url 'compose' %}">Compose</a></li>
+                      <li><i class="fas fa-envelope"></i><a href="{% url 'home' %}">All Mail</a></li>
+                      <li><i class="fas fa-inbox"></i><a href="{% url 'inbox' %}">Inbox</a></li>
+                      <li><i class="fas fa-share"></i><a href="{% url 'sent' %}">Sent</a></li>
+                      <li><i class="fas fa-file"></i><a href="#">Drafts</a></li>
+                      <li><i class="fas fa-exclamation-circle"></i><a href="{% url 'spam' %}">Spam</a></li>
+                      <li><i class="fas fa-star"></i><a href="#">Important</a></li>
+                  </ul>
+              </div>
+              <div class="navbar-nav ">
+                <a class="navbar-brand mr-4" href="{% url 'home' %}"><img src="{% static 'blog/images/gmail2.jpg' %}" height="40px" width="130px"></a>
+                <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+              </div>
+              <div class="search-box mx-auto">
+                <form method="GET" action="/search" class="form-inline search-changeStyle " >
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="query" id="query">
+                    <div class="input-group-btn">
+                      <button class="btn btn-default" type="submit">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+              </div>
+              {% else %}
+              <div class="navbar-nav mr-auto">
+                <a class="navbar-brand mr-4" href="{% url 'home' %}"><img src="{% static 'blog/images/googles-new-logo.gif' %}" height="40px" width="130px"></a>
+                <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+              </div>
+              <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'signup' %}">Signup</a>
+              </div>
+              {% endif %}
+            
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container-fluid mx-auto">
+      <div class="row">
+        <div class="col-md-12 ml-0 mr-0 mt-5 p-0">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} mt-5 col-md-6 mx-auto">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+          {% block content %}{% endblock %}
+        </div>
+      </div>  
+      
+    </main>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
